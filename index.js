@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const serverless = require("serverless-http");
+
 const multer = require("multer");
 const app = express();
 
