@@ -55,10 +55,12 @@ app.post("/api/submit", upload.single("img"), async (req, res) => {
       shelf,
     } = req.body;
 
-    const img = {
-      data: req.file.buffer,
-      contentType: req.file.mimetype,
-    };
+   const img = req.file
+      ? {
+          data: req.file.buffer,
+          contentType: req.file.mimetype,
+        }
+      : undefined;
 
     const newInventory = new Inventory({
       name,
