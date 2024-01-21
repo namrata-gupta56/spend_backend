@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm start",
-    "build": "netlify deploy --prod"
+    "start": "npm start"
   },
   "author": "",
   "license": "ISC",
@@ -16,9 +15,7 @@
     "mongoose": "^7.6.7",
     "multer": "^1.4.5-lts.1",
     "nodejs": "^0.0.0",
-    "nodemon": "^3.0.2",
-    "netlify-cli": "12.7.2",
-    "netlify-lambda": "2.0.15",
-    "serverless-http": "2.7.0"
+    "nodemon": "^3.0.2"
+   
   }
 }
