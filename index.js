@@ -1,16 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const serverless = require("serverless-http");
 const multer = require("multer");
 const app = express();
 
-mongoose.connect(
-  "mongodb+srv://ng8238:YkOaUlCo1LPAUkSo@cluster0.ofuy8a4.mongodb.net/backend",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose
+  .connect(
+    "mongodb+srv://ng8238:YkOaUlCo1LPAUkSo@cluster0.ofuy8a4.mongodb.net/backend",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.log(err));
 
 const storage = multer.memoryStorage(); // Using memory storage for simplicity
 const upload = multer({ storage: storage });
