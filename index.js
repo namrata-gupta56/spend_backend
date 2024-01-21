@@ -13,7 +13,10 @@ mongoose
     }
   )
   .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.log(err));
+   .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+    process.exit(1); // Exit the process if the connection fails
+  });
 
 const storage = multer.memoryStorage(); // Using memory storage for simplicity
 const upload = multer({ storage: storage });
