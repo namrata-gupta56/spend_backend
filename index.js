@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+var cors = require('cors')
 const multer = require("multer");
 const app = express();
-
+app.use(cors())
 mongoose
   .connect(
     "mongodb+srv://ng8238:YkOaUlCo1LPAUkSo@cluster0.ofuy8a4.mongodb.net/backend",
