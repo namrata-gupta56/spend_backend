@@ -4,6 +4,12 @@ const cors = require("cors");
 const multer = require("multer");
 const app = express();
 app.use(cors());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 mongoose
   .connect(
     "mongodb+srv://ng8238:YkOaUlCo1LPAUkSo@cluster0.ofuy8a4.mongodb.net/backend",
