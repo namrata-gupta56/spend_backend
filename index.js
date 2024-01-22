@@ -4,7 +4,6 @@ const cors = require("cors");
 const multer = require("multer");
 const app = express();
 app.use(cors());
-
 mongoose
   .connect(
     "mongodb+srv://ng8238:YkOaUlCo1LPAUkSo@cluster0.ofuy8a4.mongodb.net/backend",
@@ -33,15 +32,13 @@ const inventorySchema = new mongoose.Schema({
   storageLocation: String,
   room: String,
   shelf: Number,
-  img: {
-    data: Buffer,
-    contentType: String,
-  },
 });
 
 const Inventory = mongoose.model("Inventory", inventorySchema);
+app.use(upload.single("img"));
+app.use(express.json());
 
-app.post("/api/submit", upload.single("img"), async (req, res) => {
+app.post("/api/submit", async (req, res) => {
   try {
     const {
       name,
@@ -56,13 +53,6 @@ app.post("/api/submit", upload.single("img"), async (req, res) => {
       shelf,
     } = req.body;
 
-   const img = req.file
-  ? {
-      data: req.file.buffer,
-      contentType: req.file.mimetype,
-    }
-  : undefined;
-
     const newInventory = new Inventory({
       name,
       description,
@@ -74,7 +64,6 @@ app.post("/api/submit", upload.single("img"), async (req, res) => {
       storageLocation,
       room,
       shelf,
-      img,
     });
 
     await newInventory.save();
@@ -86,8 +75,7 @@ app.post("/api/submit", upload.single("img"), async (req, res) => {
   }
 });
 
-
-app.put("/api/update/:itemId", upload.single("img"), async (req, res) => {
+app.put("/api/update/:itemId", async (req, res) => {
   try {
     const itemId = req.params.itemId;
 
@@ -104,11 +92,6 @@ app.put("/api/update/:itemId", upload.single("img"), async (req, res) => {
       shelf,
     } = req.body;
 
-    const img = {
-      data: req.file ? req.file.buffer : undefined,
-      contentType: req.file ? req.file.mimetype : undefined,
-    };
-
     const updatedInventory = await Inventory.findByIdAndUpdate(
       itemId,
       {
@@ -122,7 +105,6 @@ app.put("/api/update/:itemId", upload.single("img"), async (req, res) => {
         storageLocation,
         room,
         shelf,
-        img,
       },
       { new: true, runValidators: true }
     );
@@ -166,7 +148,6 @@ app.get("/api/inventory", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 const port = 8000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
